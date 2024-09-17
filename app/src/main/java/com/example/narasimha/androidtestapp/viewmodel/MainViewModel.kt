@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class VehicleViewModel @Inject constructor(
+class MainViewModel @Inject constructor(
     private val repository: VehicleRepository
 ) : ViewModel() {
 

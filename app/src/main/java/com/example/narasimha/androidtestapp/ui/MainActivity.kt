@@ -2,18 +2,19 @@ package com.example.narasimha.androidtestapp.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.narasimha.androidtestapp.adapters.ManufacturerAdapter
 import com.example.narasimha.androidtestapp.databinding.ActivityMainBinding
-import com.example.narasimha.androidtestapp.viewmodel.VehicleViewModel
+import com.example.narasimha.androidtestapp.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    lateinit var viewModel: VehicleViewModel
+    lateinit var viewModel: MainViewModel
     lateinit var viewBinding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,14 +22,17 @@ class MainActivity : AppCompatActivity() {
         viewBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
-        viewModel = ViewModelProvider(this)[VehicleViewModel::class.java]
+        viewBinding.progressbarId.visibility = View.VISIBLE
+        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
 
         // Set up the RecyclerView
         viewBinding.recyclerView.layoutManager = LinearLayoutManager(this)
 
         viewModel.manufacturers.observe(this) { manufacturers ->
-            viewBinding.recyclerView.adapter = ManufacturerAdapter(manufacturers)
+            viewBinding.progressbarId.visibility = View.GONE
+            viewBinding.recyclerView.adapter = ManufacturerAdapter(manufacturers,this)
         }
+
 
         viewModel.error.observe(this) { errorMessage ->
             errorMessage?.let {

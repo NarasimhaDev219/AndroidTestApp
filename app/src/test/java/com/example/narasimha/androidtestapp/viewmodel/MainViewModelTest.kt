@@ -24,7 +24,7 @@ import org.mockito.kotlin.whenever
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
-class VehicleViewModelTest {
+class MainViewModelTest {
 
     @get:Rule
     val instantExecutorRule = InstantTaskExecutorRule()
@@ -33,13 +33,13 @@ class VehicleViewModelTest {
     private val testDispatcher = StandardTestDispatcher()
 
     private lateinit var repository: VehicleRepository
-    private lateinit var viewModel: VehicleViewModel
+    private lateinit var viewModel: MainViewModel
 
     @Before
     fun setUp() {
         Dispatchers.setMain(testDispatcher)  // Set Main dispatcher to the test dispatcher
         repository = mock()
-        viewModel = VehicleViewModel(repository)
+        viewModel = MainViewModel(repository)
     }
     @After
     fun tearDown() {
